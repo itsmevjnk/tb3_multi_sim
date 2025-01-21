@@ -1,0 +1,16 @@
+<launch>
+    <arg name="namespace"/>
+    <arg name="domain"/>
+
+    <executable
+        name="$(var namespace).domain_bridge"
+        cmd="$(exec-in-pkg tb3_bridge tb3_domain_bridge) --to $(var domain) --namespace $(var namespace)"
+        output="screen"/>
+
+    <!-- republish odom -> base_footprint transform, which we could not remap to another topic (maybe not without modifying gazebo_ros?) -->
+    <node name="odom_tf" namespace="$(var namespace)" pkg="odom_tf_publisher" exec="pub_node" output="screen">
+        <remap from="odom" to="/$(var namespace)/odom"/>
+        <remap from="/tf" to="/$(var namespace)/tf"/>
+        <remap from="/tf_static" to="/$(var namespace)/tf_static"/>
+    </node>
+</launch>
