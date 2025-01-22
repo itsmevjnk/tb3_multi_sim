@@ -70,7 +70,8 @@ def spawn_robot(context):
             ),
             launch_arguments={
                 'namespace': namespace,
-                'domain': domain
+                'domain': domain,
+                'use_sim_time': use_sim_time
             }.items()
         )
     ]

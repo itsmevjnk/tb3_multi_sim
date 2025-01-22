@@ -2,6 +2,8 @@
     <arg name="namespace"/>
     <arg name="domain"/>
 
+    <arg name="use_sim_time" default="false"/>
+
     <executable
         name="$(var namespace).domain_bridge"
         cmd="$(exec-in-pkg tb3_bridge tb3_domain_bridge) --to $(var domain) --namespace $(var namespace)"
@@ -12,5 +14,7 @@
         <remap from="odom" to="/$(var namespace)/odom"/>
         <remap from="/tf" to="/$(var namespace)/tf"/>
         <remap from="/tf_static" to="/$(var namespace)/tf_static"/>
+
+        <param name="use_sim_time" value="$(var use_sim_time)"/>
     </node>
 </launch>
