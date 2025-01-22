@@ -17,27 +17,30 @@
 # Authors: Joep Tool
 
 import os
+import random
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription
+from launch.actions import IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource, AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
-
-def generate_launch_description():
+def spawn_robot(context):
     launch_file_dir = os.path.join(get_package_share_directory('tb3_multi_launch'), 'launch')
     bridge_launch_dir = os.path.join(get_package_share_directory('tb3_domain_bridge'), 'launch')
 
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-    x_pose = LaunchConfiguration('x_pose', default='-2.0')
-    y_pose = LaunchConfiguration('y_pose', default='-0.5')
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true').perform(context)
+    x_pose = LaunchConfiguration('x_pose', default='-2.0').perform(context)
+    y_pose = LaunchConfiguration('y_pose', default='-0.5').perform(context)
 
-    model = LaunchConfiguration('model', default='waffle')
-    namespace = LaunchConfiguration('namespace')
-    domain = LaunchConfiguration('domain')
+    model = LaunchConfiguration('model', default='waffle').perform(context)
+    namespace = LaunchConfiguration('namespace', default='').perform(context) # blank = random
+    domain = LaunchConfiguration('domain').perform(context)
 
-    return LaunchDescription([
+    if namespace == '':
+        namespace = model + '_' + ''.join([random.choice('0123456789abcdef') for x in range(8)])
+
+    return [
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(launch_file_dir, 'robot_state_publisher.launch.py')
@@ -70,4 +73,20 @@ def generate_launch_description():
                 'domain': domain
             }.items()
         )
+    ]
+
+def generate_launch_description():
+    launch_file_dir = os.path.join(get_package_share_directory('tb3_multi_launch'), 'launch')
+    bridge_launch_dir = os.path.join(get_package_share_directory('tb3_domain_bridge'), 'launch')
+
+    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
+    x_pose = LaunchConfiguration('x_pose', default='-2.0')
+    y_pose = LaunchConfiguration('y_pose', default='-0.5')
+
+    model = LaunchConfiguration('model', default='waffle')
+    namespace = LaunchConfiguration('namespace', default='') # blank = random
+    domain = LaunchConfiguration('domain')
+
+    return LaunchDescription([
+        OpaqueFunction(function=spawn_robot)
     ])

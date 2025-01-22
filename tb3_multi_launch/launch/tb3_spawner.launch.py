@@ -40,7 +40,7 @@ def launch_spawner(context):
             executable='spawn_entity.py',
             name=f'{namespace}_spawner',
             arguments=[
-                '-entity', TURTLEBOT3_MODEL,
+                '-entity', namespace,
                 '-file', urdf_path,
                 '-x', x_pose,
                 '-y', y_pose,
