@@ -84,6 +84,8 @@ int main(int argc, char **argv) {
     config.options.name(tb_nspace + "_bridge");
     config.topics = {
         {domain_bridge::TopicBridge{"/clock", "rosgraph_msgs/msg/Clock", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions()},
+        {domain_bridge::TopicBridge{topic_prefix + "/camera/camera_info", "sensor_msgs/msg/CameraInfo", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/camera/camera_info")},
+        {domain_bridge::TopicBridge{topic_prefix + "/camera/image_raw", "sensor_msgs/msg/Image", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/camera/image_raw")},
         {domain_bridge::TopicBridge{"/cmd_vel", "geometry_msgs/msg/Twist", to_domain_id, from_domain_id}, domain_bridge::TopicBridgeOptions().remap_name(topic_prefix + "/cmd_vel").wait_for_publisher(false)}, // cmd_vel publisher comes after subscriber
         {domain_bridge::TopicBridge{topic_prefix + "/imu", "sensor_msgs/msg/Imu", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/imu")},
         {domain_bridge::TopicBridge{topic_prefix + "/joint_states", "sensor_msgs/msg/JointState", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/joint_states")},
