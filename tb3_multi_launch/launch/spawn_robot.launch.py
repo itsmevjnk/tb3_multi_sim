@@ -21,7 +21,7 @@ import random
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, OpaqueFunction
+from launch.actions import IncludeLaunchDescription, OpaqueFunction, DeclareLaunchArgument
 from launch.launch_description_sources import PythonLaunchDescriptionSource, AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
@@ -77,17 +77,17 @@ def spawn_robot(context):
     ]
 
 def generate_launch_description():
-    launch_file_dir = os.path.join(get_package_share_directory('tb3_multi_launch'), 'launch')
-    bridge_launch_dir = os.path.join(get_package_share_directory('tb3_domain_bridge'), 'launch')
-
-    use_sim_time = LaunchConfiguration('use_sim_time', default='true')
-    x_pose = LaunchConfiguration('x_pose', default='-2.0')
-    y_pose = LaunchConfiguration('y_pose', default='-0.5')
-
-    model = LaunchConfiguration('model', default='waffle')
-    namespace = LaunchConfiguration('namespace', default='') # blank = random
-    domain = LaunchConfiguration('domain')
-
     return LaunchDescription([
+        DeclareLaunchArgument('use_sim_time', default_value='true',
+                                description='Use simulation (Gazebo) clock if true'),
+        DeclareLaunchArgument('x_pose', default_value='-2.0',
+                                description='Initial x position of the robot'),
+        DeclareLaunchArgument('y_pose', default_value='-0.5',
+                                description='Initial y position of the robot'),
+        DeclareLaunchArgument('model', default_value='waffle',
+                                description='Robot model type (waffle, burger or waffle_pi)'),
+        DeclareLaunchArgument('namespace', default_value='',
+                                description='The robot\'s name (and its namespace), random by default'),
+        DeclareLaunchArgument('domain', description='The ROS2 domain to bridge the robot\'s topics to'),
         OpaqueFunction(function=spawn_robot)
     ])
