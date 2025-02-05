@@ -34,6 +34,8 @@ WORLDS = {
     'dqn4': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage4.world'),
     'world_2x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_2x.world'),
     'world_4x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_4x.world'),
+    'world_8x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_8x.world'),
+    'world_8x_step4': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_8x_step4.world'),
 }
 
 def launch_gzserver(context, pkg_gazebo_ros):
