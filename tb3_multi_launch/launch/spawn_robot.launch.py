@@ -32,6 +32,7 @@ def spawn_robot(context):
     use_sim_time = LaunchConfiguration('use_sim_time', default='true').perform(context)
     x_pose = LaunchConfiguration('x_pose', default='-2.0').perform(context)
     y_pose = LaunchConfiguration('y_pose', default='-0.5').perform(context)
+    yaw_pose = LaunchConfiguration('yaw_pose', default='0.0').perform(context)
 
     model = LaunchConfiguration('model', default='waffle').perform(context)
     namespace = LaunchConfiguration('namespace', default='').perform(context) # blank = random
@@ -59,6 +60,7 @@ def spawn_robot(context):
             launch_arguments={
                 'x_pose': x_pose,
                 'y_pose': y_pose,
+                'yaw_pose': yaw_pose,
                 'namespace': namespace,
                 'model': model
             }.items()
@@ -84,6 +86,8 @@ def generate_launch_description():
                                 description='Initial x position of the robot'),
         DeclareLaunchArgument('y_pose', default_value='-0.5',
                                 description='Initial y position of the robot'),
+        DeclareLaunchArgument('yaw_pose', default_value='0.0',
+                                description='Initial yaw angle of the robot'),
         DeclareLaunchArgument('model', default_value='waffle',
                                 description='Robot model type (waffle, burger or waffle_pi)'),
         DeclareLaunchArgument('namespace', default_value='',

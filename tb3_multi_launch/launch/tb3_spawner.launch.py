@@ -32,6 +32,7 @@ def launch_spawner(context):
 
     x_pose = LaunchConfiguration('x_pose', default='0.0').perform(context)
     y_pose = LaunchConfiguration('y_pose', default='0.0').perform(context)
+    yaw_pose = LaunchConfiguration('yaw_pose', default='0.0').perform(context)
     namespace = LaunchConfiguration('namespace').perform(context)
     
     return [
@@ -45,6 +46,7 @@ def launch_spawner(context):
                 '-x', x_pose,
                 '-y', y_pose,
                 '-z', '0.01',
+                '-Y', yaw_pose,
                 '-robot_namespace', namespace
             ],
             output='screen'
@@ -55,12 +57,17 @@ def generate_launch_description():
     return LaunchDescription([
         DeclareLaunchArgument(
             'x_pose', default_value='0.0',
-            description='Specify namespace of the robot'
+            description='Initial X position (in metres)'
         ),
 
         DeclareLaunchArgument(
             'y_pose', default_value='0.0',
-            description='Specify namespace of the robot'
+            description='Initial Y position (in metres)'
+        ),
+
+        DeclareLaunchArgument(
+            'yaw_pose', default_value='0.0',
+            description='Initial yaw angle (in radians)'
         ),
 
         DeclareLaunchArgument(
