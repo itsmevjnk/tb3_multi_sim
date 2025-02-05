@@ -25,21 +25,19 @@ from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
 
 WORLDS = {
-    'empty': 'empty_world.world',
-    'house': 'turtlebot3_house.world',
-    'world': 'turtlebot3_world.world',
-    'dqn1': 'turtlebot3_dqn_stage1.world',
-    'dqn2': 'turtlebot3_dqn_stage2.world',
-    'dqn3': 'turtlebot3_dqn_stage3.world',
-    'dqn4': 'turtlebot3_dqn_stage4.world',
+    'empty': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'empty_world.world'),
+    'house': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_house.world'),
+    'world': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_world.world'),
+    'dqn1': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage1.world'),
+    'dqn2': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage2.world'),
+    'dqn3': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage3.world'),
+    'dqn4': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage4.world'),
+    'world_2x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_2x.world'),
+    'world_4x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_4x.world'),
 }
 
 def launch_gzserver(context, pkg_gazebo_ros):
-    world = os.path.join(
-        get_package_share_directory('turtlebot3_gazebo'),
-        'worlds',
-        WORLDS[LaunchConfiguration('world', default='empty').perform(context)]
-    )
+    world = WORLDS[LaunchConfiguration('world', default='empty').perform(context)]
 
     return [
         IncludeLaunchDescription(
