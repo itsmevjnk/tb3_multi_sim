@@ -20,13 +20,17 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+MODEL_DIRS = {
+    'waffle': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'models', 'turtlebot3_waffle'),
+    'waffle_pi': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'models', 'turtlebot3_waffle_pi'),
+    'burger': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'models', 'turtlebot3_burger'),
+    'waffle_bm': os.path.join(get_package_share_directory('tb3_multi_launch'), 'models', 'turtlebot3_waffle'),
+}
+
 def launch_spawner(context):
     TURTLEBOT3_MODEL = LaunchConfiguration('model', default='waffle').perform(context)
-    model_folder = 'turtlebot3_' + TURTLEBOT3_MODEL
     urdf_path = os.path.join(
-        get_package_share_directory('turtlebot3_gazebo'),
-        'models',
-        model_folder,
+        MODEL_DIRS[TURTLEBOT3_MODEL],
         'model.sdf'
     )
 

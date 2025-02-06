@@ -24,16 +24,19 @@ from launch.actions import DeclareLaunchArgument, OpaqueFunction
 from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 
+URDF_FILES = {
+    'waffle': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'urdf', 'turtlebot3_waffle.urdf'),
+    'waffle_pi': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'urdf', 'turtlebot3_waffle_pi.urdf'),
+    'burger': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'urdf', 'turtlebot3_burger.urdf'),
+    'waffle_bm': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'urdf', 'turtlebot3_waffle.urdf'),
+}
+
 def launch_node(context):
     TURTLEBOT3_MODEL = LaunchConfiguration('model', default='waffle').perform(context)
 
-    urdf_file_name = 'turtlebot3_' + TURTLEBOT3_MODEL + '.urdf'
+    urdf_path = URDF_FILES[TURTLEBOT3_MODEL]
+    urdf_file_name = os.path.basename(urdf_path)
     print('urdf_file_name : {}'.format(urdf_file_name))
-
-    urdf_path = os.path.join(
-        get_package_share_directory('turtlebot3_gazebo'),
-        'urdf',
-        urdf_file_name)
     
     with open(urdf_path, 'r') as infp:
         robot_desc = infp.read()

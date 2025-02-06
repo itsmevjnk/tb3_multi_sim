@@ -94,6 +94,7 @@ int main(int argc, char **argv) {
         {domain_bridge::TopicBridge{topic_prefix + "/scan", "sensor_msgs/msg/LaserScan", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/scan")},
         {domain_bridge::TopicBridge{topic_prefix + "/tf", "tf2_msgs/msg/TFMessage", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/tf")},
         {domain_bridge::TopicBridge{topic_prefix + "/tf_static", "tf2_msgs/msg/TFMessage", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/tf_static")},
+        {domain_bridge::TopicBridge{topic_prefix + "/bumper_states", "gazebo_msgs/msg/ContactsState", from_domain_id, to_domain_id}, domain_bridge::TopicBridgeOptions().remap_name("/bumper_states")},
     };
 
     domain_bridge::DomainBridge bridge(config);
