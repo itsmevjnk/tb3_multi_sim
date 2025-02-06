@@ -22,6 +22,7 @@ from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
+from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
 
 WORLDS = {
@@ -53,11 +54,13 @@ def launch_gzserver(context, pkg_gazebo_ros):
 
 def generate_launch_description():
     pkg_gazebo_ros = get_package_share_directory('gazebo_ros')
+    headless = LaunchConfiguration('headless', default=False)
     return LaunchDescription([
         OpaqueFunction(function=launch_gzserver, args=[pkg_gazebo_ros]),
         IncludeLaunchDescription(
             PythonLaunchDescriptionSource(
                 os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
-            )
+            ),
+            condition=UnlessCondition(headless)
         )
     ])
