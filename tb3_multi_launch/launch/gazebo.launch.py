@@ -37,6 +37,9 @@ WORLDS = {
     'world_2x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_2x.world'),
     'world_4x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_4x.world'),
     'world_8x': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_8x.world'),
+    'world_2x_step': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_2x_step.world'),
+    'world_4x_step': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_4x_step.world'),
+    'world_8x_step': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_8x_step.world'),
     'world_8x_step4': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_8x_step4.world'),
     'world_max': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_max.world'),
 }
