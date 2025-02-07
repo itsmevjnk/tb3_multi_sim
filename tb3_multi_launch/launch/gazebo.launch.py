@@ -24,6 +24,7 @@ from launch.actions import IncludeLaunchDescription, OpaqueFunction
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.conditions import UnlessCondition
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 
 WORLDS = {
     'empty': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'empty_world.world'),
@@ -62,5 +63,15 @@ def generate_launch_description():
                 os.path.join(pkg_gazebo_ros, 'launch', 'gzclient.launch.py')
             ),
             condition=UnlessCondition(headless)
+        ),
+        Node(
+            package='tb3_multi_launch',
+            executable='cleanup_node',
+            name='cleanup_node',
+            output='screen',
+            parameters=[{
+                'use_sim_time': True
+            }],
+            remappings=[]
         )
     ])
