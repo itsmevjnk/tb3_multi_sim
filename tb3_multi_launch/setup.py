@@ -26,7 +26,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'cleanup_node = tb3_multi_launch.cleanup_node:main'
+            'cleanup_node = tb3_multi_launch.cleanup_node:main',
+            'delete_watch_node = tb3_multi_launch.delete_watch_node:main'
         ],
     },
 )

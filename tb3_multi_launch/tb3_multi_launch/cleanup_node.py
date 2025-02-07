@@ -1,6 +1,7 @@
 # see also: https://gist.github.com/driftregion/14f6da05a71a57ef0804b68e17b06de5
 
 import rclpy
+from rclpy import qos
 from rclpy.node import Node
 from threading import Event
 from rclpy.callback_groups import ReentrantCallbackGroup
@@ -8,6 +9,7 @@ from rclpy.executors import MultiThreadedExecutor, SingleThreadedExecutor
 
 from gazebo_msgs.srv import GetModelList, DeleteEntity
 from std_srvs.srv import Empty
+from std_msgs.msg import String
 
 EXCLUDED_ENTITIES = {
     'ground_plane',
@@ -23,6 +25,8 @@ class CleanupNode(Node):
 
         self.get_models_srv = self.create_client(GetModelList, '/get_model_list', callback_group=self.callback_group)
         self.delete_entity_srv = self.create_client(DeleteEntity, '/delete_entity', callback_group=self.callback_group)
+
+        self.deleted_entities_pub = self.create_publisher(String, '/deleted_entities', qos.qos_profile_system_default)
         
         self.create_service(Empty, '/clean_simulation', self.clean_cb, callback_group=self.callback_group)
         
@@ -51,6 +55,7 @@ class CleanupNode(Node):
         for entity in entities:
             future = self.delete_entity_srv.call_async(DeleteEntity.Request(name=entity)); future.add_done_callback(done_cb)
             event.wait()
+            self.deleted_entities_pub.publish(String(data=entity))
             self.get_logger().info(f'deleted entity {entity}')
 
         return response

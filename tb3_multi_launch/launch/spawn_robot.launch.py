@@ -21,9 +21,10 @@ import random
 
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
-from launch.actions import IncludeLaunchDescription, OpaqueFunction, DeclareLaunchArgument
+from launch.actions import IncludeLaunchDescription, OpaqueFunction, DeclareLaunchArgument, Shutdown
 from launch.launch_description_sources import PythonLaunchDescriptionSource, AnyLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
+from launch_ros.actions import Node
 
 def spawn_robot(context):
     launch_file_dir = os.path.join(get_package_share_directory('tb3_multi_launch'), 'launch')
@@ -75,6 +76,18 @@ def spawn_robot(context):
                 'domain': domain,
                 'use_sim_time': use_sim_time
             }.items()
+        ),
+
+        Node(
+            package='tb3_multi_launch',
+            executable='delete_watch_node',
+            name='delete_watch_node',
+            output='screen',
+            parameters=[{
+                'name': namespace
+            }],
+            remappings=[],
+            on_exit=Shutdown()
         )
     ]
 
