@@ -29,7 +29,7 @@ from launch_ros.actions import Node
 WORLDS = {
     'empty': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'empty_world.world'),
     'house': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_house.world'),
-    'world': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_world.world'),
+    'world': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world.world'),
     'dqn1': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage1.world'),
     'dqn2': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage2.world'),
     'dqn3': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage3.world'),
