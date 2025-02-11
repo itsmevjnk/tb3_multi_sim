@@ -32,6 +32,7 @@ WORLDS = {
     'world': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world.world'),
     'world_12t': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_12t.world'),
     'world_16t': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_16t.world'),
+    'world_24t': os.path.join(get_package_share_directory('tb3_multi_launch'), 'worlds', 'turtlebot3_world_24t.world'),
     'dqn1': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage1.world'),
     'dqn2': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage2.world'),
     'dqn3': os.path.join(get_package_share_directory('turtlebot3_gazebo'), 'worlds', 'turtlebot3_dqn_stage3.world'),
