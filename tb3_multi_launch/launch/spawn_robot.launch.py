@@ -38,6 +38,8 @@ def spawn_robot(context):
     model = LaunchConfiguration('model', default='waffle').perform(context)
     namespace = LaunchConfiguration('namespace', default='').perform(context) # blank = random
     domain = LaunchConfiguration('domain').perform(context)
+    
+    publish_map_tf = LaunchConfiguration('publish_map_tf', default='false')
 
     if namespace == '':
         namespace = model + '_' + ''.join([random.choice('0123456789abcdef') for x in range(8)])
@@ -50,7 +52,8 @@ def spawn_robot(context):
             launch_arguments={
                 'use_sim_time': use_sim_time,
                 'namespace': namespace,
-                'model': model
+                'model': model,
+                'publish_map_tf': publish_map_tf
             }.items()
         ),
 
@@ -74,7 +77,8 @@ def spawn_robot(context):
             launch_arguments={
                 'namespace': namespace,
                 'domain': domain,
-                'use_sim_time': use_sim_time
+                'use_sim_time': use_sim_time,
+                'publish_odom_tf': str(publish_map_tf.perform(context).lower() == 'false')
             }.items()
         ),
 
@@ -106,5 +110,12 @@ def generate_launch_description():
         DeclareLaunchArgument('namespace', default_value='',
                                 description='The robot\'s name (and its namespace), random by default'),
         DeclareLaunchArgument('domain', description='The ROS2 domain to bridge the robot\'s topics to'),
+
+        DeclareLaunchArgument(
+            'publish_map_tf',
+            default_value='false',
+            description='Directly publish map -> base_footprint transform from Gazebo'
+        ),
+
         OpaqueFunction(function=spawn_robot)
     ])

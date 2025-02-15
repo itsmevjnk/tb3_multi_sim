@@ -2,6 +2,7 @@
     <arg name="namespace"/>
     <arg name="domain"/>
 
+    <arg name="publish_odom_tf" default="true" />
     <arg name="use_sim_time" default="false"/>
 
     <executable
@@ -10,7 +11,7 @@
         output="screen"/>
 
     <!-- republish odom -> base_footprint transform, which we could not remap to another topic (maybe not without modifying gazebo_ros?) -->
-    <node name="odom_tf" namespace="$(var namespace)" pkg="odom_tf_publisher" exec="pub_node" output="screen">
+    <node name="odom_tf" namespace="$(var namespace)" pkg="odom_tf_publisher" exec="pub_node" output="screen" if="$(var publish_odom_tf)">
         <remap from="odom" to="/$(var namespace)/odom"/>
         <remap from="/tf" to="/$(var namespace)/tf"/>
         <remap from="/tf_static" to="/$(var namespace)/tf_static"/>

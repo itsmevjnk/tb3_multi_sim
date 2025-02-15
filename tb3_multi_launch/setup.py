@@ -27,7 +27,8 @@ setup(
     entry_points={
         'console_scripts': [
             'cleanup_node = tb3_multi_launch.cleanup_node:main',
-            'delete_watch_node = tb3_multi_launch.delete_watch_node:main'
+            'delete_watch_node = tb3_multi_launch.delete_watch_node:main',
+            'pose_node = tb3_multi_launch.pose_node:main'
         ],
     },
 )
